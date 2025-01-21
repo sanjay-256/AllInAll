@@ -72,7 +72,7 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="flex items-center justify-between p-3 px-5 font-medium shadow-md">
+    <div className="sticky top-0 z-50 flex items-center justify-between p-3 px-5 font-medium shadow-md bg-white/30 backdrop-blur-md border border-white/20">
       {/* Brand Logo */}
       <Link to="/home" className="brand text-4xl font-semibold md:tracking-normal hover:md:tracking-widest transition-all duration-300">
         <span className="block md:hidden">All in All</span>
