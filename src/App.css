@@ -1,0 +1,31 @@
+.brand {
+    font-family: "Bonheur Royale", serif;
+    font-style: normal;
+  }
+  
+  .texts {
+    font-family: "Merriweather", serif;
+    font-style: normal;
+  }
+
+  .atext1{
+    font-family: "Elsie", serif;
+    font-style: normal;
+  }
+  
+
+  .atext{
+    font-family: "Caveat", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }
+
+  .ahead {
+    font-family: "Cormorant Upright", serif;
+  font-style: normal;
+
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
