@@ -1,14 +1,13 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Csmallcard from "./Csmallcard"; 
 import { AppContext } from '../App';
 
 const Wishlist = () => {
   
-  const {BASE_URL} = useContext(AppContext);
+  const { BASE_URL } = useContext(AppContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -27,7 +26,7 @@ const Wishlist = () => {
     };
 
     fetchWishlist();
-  }, [wishlistProducts]);
+  }, [BASE_URL]); 
 
   return (
     <div className="min-h-screen bg-gray-100">

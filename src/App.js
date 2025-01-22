@@ -16,7 +16,7 @@ function App() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [allproducts, setAllproducts] = useState([]);
   const [cartCount, setCartCount] = useState(0);
-  const BASE_URL="http://localhost:8080";
+  const BASE_URL="http://192.168.1.11:8080";
 
   useEffect(() => {
     const userStatus = localStorage.getItem('allinall');
