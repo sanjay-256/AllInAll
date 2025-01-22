@@ -6,7 +6,7 @@ import axios from 'axios';
 import Comment from './Comment';
 
 const Displaycard = () => {
-    const { allproducts, toggleLike, setCartCount} = useContext(AppContext);
+    const { allproducts, toggleLike, setCartCount,BASE_URL} = useContext(AppContext);
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [image, setImage] = useState('');
@@ -32,10 +32,10 @@ const Displaycard = () => {
                 return;
             }
 
-            const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+            const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
             const userId = userResponse.data;
 
-            const response = await axios.get(`http://localhost:8080/cart/count/${userId}`);
+            const response = await axios.get(`${BASE_URL}/cart/count/${userId}`);
             setCartCount(response.data);
         } catch (error) {
             console.error("Error fetching cart count:", error);
@@ -51,10 +51,10 @@ const Displaycard = () => {
                     return;
                 }
 
-                const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+                const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
                 const userId = userResponse.data;
 
-                const response = await axios.get(`http://localhost:8080/cart/incart/${userId}/${id}`);
+                const response = await axios.get(`${BASE_URL}/cart/incart/${userId}/${id}`);
                 setIncart(response.data);
             } catch (error) {
                 console.error("Error fetching cart status:", error);
@@ -71,11 +71,11 @@ const Displaycard = () => {
                     return;
                 }
 
-                const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+                const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
                 const userId = userResponse.data;
 
-                const response = await axios.get(`http://localhost:8080/cart/size/${userId}/${id}`);
-                const quan = await axios.get(`http://localhost:8080/cart/quantity/${userId}/${id}`);
+                const response = await axios.get(`${BASE_URL}/cart/size/${userId}/${id}`);
+                const quan = await axios.get(`${BASE_URL}/cart/quantity/${userId}/${id}`);
                 setSizes(response.data);
                 setQuans(quan.data);
             } catch (error) {
@@ -99,10 +99,10 @@ const Displaycard = () => {
                 return;
             }
 
-            const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+            const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
             const userId = userResponse.data;
 
-            await axios.post(`http://localhost:8080/cart/addcart/${userId}/${product.id}/${size}/${quantity}`);
+            await axios.post(`${BASE_URL}/cart/addcart/${userId}/${product.id}/${size}/${quantity}`);
             setIncart(true);
             setSizes(size);
             setQuans(quantity);
@@ -120,7 +120,7 @@ const Displaycard = () => {
                 return;
             }
 
-            const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+            const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
             const userId = userResponse.data;
 
             await axios.delete(`http://localhost:8080/cart/delcart/${userId}/${product.id}`);

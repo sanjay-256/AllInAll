@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "../App.css"
 import { TextInput1 } from '../inputfields/TextInput'
 import axios from 'axios';
+import { AppContext } from '../App';
 
 const About = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ const About = () => {
     queries: "",
     text:""
   });
+
+  const {BASE_URL} = useContext(AppContext);
 
   const [submit,setSubmit]=useState(false);
 
@@ -25,7 +28,7 @@ const About = () => {
     e.preventDefault();
       setSubmit(true);
     try {
-      const response=await axios.post(`http://localhost:8080/user/query/${formData.email}/${formData.queries}`);
+      const response=await axios.post(`${BASE_URL}/user/query/${formData.email}/${formData.queries}`);
       if(response.data !=="error"){
         setFormData({ name: "", email: "", queries: "", text: "Message sent successfully..." });
         setSubmit(false);

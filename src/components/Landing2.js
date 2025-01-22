@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import { TextInput } from '../inputfields/TextInput'
 import Password from '../inputfields/Password'
 import axios from 'axios'
 import "../App.css"
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../App';
 
 const Landing2 = () => {
+  
+  const {BASE_URL} = useContext(AppContext);
   const navigate=useNavigate();
   const [user, setUser] = useState({
     username: "",
@@ -58,7 +61,7 @@ const Landing2 = () => {
         useremail: user.useremail,
         usernumber: user.usernumber ? parseInt(user.usernumber, 10) : null,
       };
-      const response = await axios.post("http://localhost:8080/user/register", userData);
+      const response = await axios.post(`${BASE_URL}/user/register`, userData);
       console.log(response);
       if (response.data === "Registered successfully") {
         alert("OTP sent to your mail-id: " + user.useremail);
@@ -85,7 +88,7 @@ const Landing2 = () => {
         userotp: user.userotp,
         useremail: user.useremail
       };
-      const response = await axios.post(`http://localhost:8080/user/verify-otp/${userData.useremail}/${userData.userotp}`);
+      const response = await axios.post(`${BASE_URL}/user/verify-otp/${userData.useremail}/${userData.userotp}`);
       console.log(response);
       if (response.data === "User verified") {
         alert("User " + user.username + " verified");
@@ -124,7 +127,7 @@ const Landing2 = () => {
         userpassword: user.userpassword,
         useremail: user.useremail
       };
-      const response = await axios.post(`http://localhost:8080/user/setpassword/${userData.useremail}/${userData.userpassword}`);
+      const response = await axios.post(`${BASE_URL}/user/setpassword/${userData.useremail}/${userData.userpassword}`);
       console.log(response);
       if (response.data === "Password has been set successfully.") {
         alert("Signup successful!");
@@ -160,7 +163,7 @@ const Landing2 = () => {
         alert("enter your registered email or password!");
         return;
       }
-      const response = await axios.get(`http://localhost:8080/user/login/${userin.useremail}/${userin.userpassword}`);
+      const response = await axios.get(`${BASE_URL}/user/login/${userin.useremail}/${userin.userpassword}`);
       const message = response.data;
 
       if (message.startsWith("Welcome")) {
@@ -189,7 +192,7 @@ const Landing2 = () => {
     try {
       if (userin.useremail) {
         alert("mail sent");
-        const response = await axios.get(`http://localhost:8080/user/forgotpass/${userin.useremail}`);
+        const response = await axios.get(`${BASE_URL}/user/forgotpass/${userin.useremail}`);
         console.log(response.data);
 
       } else {

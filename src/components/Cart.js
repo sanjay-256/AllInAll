@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Trash2 } from "lucide-react";
+import { AppContext } from '../App';
 
 const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const BASE_URL="http://localhost:8080";
+  const {BASE_URL} = useContext(AppContext);
 
   const calculateOfferPercent = (original, discounted) => {
     return Math.round(((original - discounted) / original) * 100);

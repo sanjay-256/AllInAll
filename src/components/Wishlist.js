@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import axios from "axios";
 import Csmallcard from "./Csmallcard"; 
+import { AppContext } from '../App';
 
 const Wishlist = () => {
+  
+  const {BASE_URL} = useContext(AppContext);
   const [wishlistProducts, setWishlistProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -11,10 +14,10 @@ const Wishlist = () => {
     const fetchWishlist = async () => {
       try {
         const email = localStorage.getItem("useremail");
-        const user = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+        const user = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
         const userid = user.data;
 
-        const response = await axios.get(`http://localhost:8080/wishlist/getproducts/${userid}`);
+        const response = await axios.get(`${BASE_URL}/wishlist/getproducts/${userid}`);
         setWishlistProducts(response.data || []);
         setLoading(false);
       } catch (error) {

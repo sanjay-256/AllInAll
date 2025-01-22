@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useContext } from 'react';
 import axios from 'axios';
 import { IoIosSend } from "react-icons/io";
 import { BiSolidCommentDetail } from "react-icons/bi";
 import '../App.css'
+import { AppContext } from '../App';
 
 const Comment = ({ id }) => {
+    
+  const {BASE_URL} = useContext(AppContext);
         const [reviews,setReviews]=useState("");
         const [comment,setComment]=useState([]);
     useEffect(() => {
         const review = async () => {
-            const response = await axios.get(`http://localhost:8080/review/getreview/${id}`);
+            const response = await axios.get(`${BASE_URL}/review/getreview/${id}`);
             setComment(response.data);
         }
         review();
@@ -17,14 +20,14 @@ const Comment = ({ id }) => {
 
     const sendReview=async()=>{
         const email = localStorage.getItem("useremail");
-        const user = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+        const user = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
         const userid = user.data;
         const payload={
             comment:reviews,
             date: new Date().toISOString()
         }
-        await axios.post(`http://localhost:8080/review/addreview/${userid}/${id}`,payload);
-        const response = await axios.get(`http://localhost:8080/review/getreview/${id}`);
+        await axios.post(`${BASE_URL}/review/addreview/${userid}/${id}`,payload);
+        const response = await axios.get(`${BASE_URL}/review/getreview/${id}`);
         setComment(response.data);
         setReviews("");
     }

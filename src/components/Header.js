@@ -15,7 +15,7 @@ import { AppContext } from '../App';
 
 const Header = () => {
   
-  const { cartCount } = useContext(AppContext);
+  const { cartCount,BASE_URL } = useContext(AppContext);
   const navigate = useNavigate();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [user, setUser] = useState();
@@ -26,7 +26,7 @@ const Header = () => {
       try {
         const email = localStorage.getItem('useremail');
         if (email) {
-          const response = await axios.get(`http://localhost:8080/user/profile/${email}`);
+          const response = await axios.get(`${BASE_URL}/user/profile/${email}`);
           setUser(response.data);
         }
       } catch (error) {

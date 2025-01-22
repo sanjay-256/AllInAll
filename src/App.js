@@ -16,6 +16,7 @@ function App() {
   const [isRegistered, setIsRegistered] = useState(false);
   const [allproducts, setAllproducts] = useState([]);
   const [cartCount, setCartCount] = useState(0);
+  const BASE_URL="http://localhost:8080";
 
   useEffect(() => {
     const userStatus = localStorage.getItem('allinall');
@@ -25,18 +26,18 @@ function App() {
 
     const fetchProductsWithLikes = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/product/getall");
+        const response = await axios.get(`${BASE_URL}/product/getall`);
         const products = response.data;
 
         const email = localStorage.getItem('useremail');
         if (email) {
-          const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+          const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
           const userId = userResponse.data;
 
           // Fetch isLiked for each product
           const enrichedProducts = await Promise.all(
             products.map(async (product) => {
-              const isLikedResponse = await axios.get(`http://localhost:8080/wishlist/isLiked/${userId}/${product.id}`);
+              const isLikedResponse = await axios.get(`${BASE_URL}/wishlist/isLiked/${userId}/${product.id}`);
               return {
                 ...product,
                 isLiked: isLikedResponse.data, 
@@ -63,10 +64,10 @@ function App() {
               return;
           }
 
-          const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+          const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
           const userId = userResponse.data;
 
-          const response = await axios.get(`http://localhost:8080/cart/count/${userId}`);
+          const response = await axios.get(`${BASE_URL}/cart/count/${userId}`);
           setCartCount(response.data);
       } catch (error) {
           console.error("Error fetching cart count:", error);
@@ -83,7 +84,7 @@ function App() {
         return;
       }
   
-      const userResponse = await axios.get(`http://localhost:8080/user/getuserid/${email}`);
+      const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
       const userId = userResponse.data;
   
       const productIndex = allproducts.findIndex((p) => p.id === productId);
@@ -99,12 +100,12 @@ function App() {
       // Now perform the backend operation
       if (isLiked) {
         // Unlike the product
-        await axios.post(`http://localhost:8080/wishlist/unlike/${userId}/${productId}`);
-        await axios.delete(`http://localhost:8080/wishlist/delwishlist/${userId}/${productId}`);
+        await axios.post(`${BASE_URL}/wishlist/unlike/${userId}/${productId}`);
+        await axios.delete(`${BASE_URL}/wishlist/delwishlist/${userId}/${productId}`);
       } else {
         // Like the product
-        await axios.post(`http://localhost:8080/wishlist/like/${userId}/${productId}`);
-        await axios.post(`http://localhost:8080/wishlist/addwishlist/${userId}/${productId}`);
+        await axios.post(`${BASE_URL}/wishlist/like/${userId}/${productId}`);
+        await axios.post(`${BASE_URL}/wishlist/addwishlist/${userId}/${productId}`);
       }
     } catch (error) {
       console.error("Error toggling like status:", error);
@@ -112,7 +113,7 @@ function App() {
   };
 
   return (
-    <AppContext.Provider value={{ allproducts, cartCount, setCartCount, toggleLike }}>
+    <AppContext.Provider value={{ allproducts, cartCount,BASE_URL, setCartCount, toggleLike }}>
       <Router>
         <MainContent isRegistered={isRegistered} setIsRegistered={setIsRegistered} />
       </Router>
