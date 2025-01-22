@@ -146,7 +146,7 @@ const Displaycard = () => {
     };
 
     return (
-        <div className="bg-gray-50 pt-10">
+        <div className="bg-gray-50 py-10">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col sm:flex-row gap-7">
                     {/* Product Images */}
