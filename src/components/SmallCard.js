@@ -46,7 +46,7 @@ const SmallCard = ({ products, classname }) => {
                 alt={item.title}
               />
               {item.discountedPrice>0 && item.originalPrice && (
-                <span className="absolute top-2 left-2 bg-[#E23378] text-white font-medium px-2 rounded flex items-center">
+                <span className="absolute top-2 left-2 bg-[#8A2BE2] text-white font-medium px-2 rounded flex items-center">
                   <span className='text-md atext1 pb-1'>{calculateDiscountPercentage(item.originalPrice, item.discountedPrice)}</span> <span className="text-xs texts"> % OFF</span>
                 </span>
               )}

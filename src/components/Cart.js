@@ -96,8 +96,8 @@ const Cart = () => {
     <div className="min-h-scree bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-center mb-5">
-          <ShoppingBag className="w-8 h-8 text-[#E23378] mr-2" />
-          <h1 className="text-3xl font-bold text-gray-900">Your Shopping Cart</h1>
+          <ShoppingBag className="w-8 h-8 text-[#8A2BE2] mr-2" />
+          <h1 className="text-3xl font-bold text-[#8A2BE2]">Your Shopping Cart</h1>
         </div>
 
         {cartProducts.length === 0 ? (
@@ -107,7 +107,7 @@ const Cart = () => {
             <p className="text-gray-500 mb-6">Looks like you haven't added anything yet.</p>
             <button
               onClick={() => navigate("/")}
-              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#E23378] hover:bg-[#c92e69] transition-colors duration-200"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#8A2BE2] hover:bg-[#c92e69] transition-colors duration-200"
             >
               Continue Shopping
             </button>
@@ -144,7 +144,7 @@ const Cart = () => {
                           className="cursor-pointer"
                           onClick={() => handleProductSelect(product)}
                         >
-                          <h3 className="text-lg font-semibold text-gray-900 capitalize hover:text-[#E23378] transition-colors duration-200">
+                          <h3 className="text-lg font-semibold text-gray-900 capitalize hover:text-[#8A2BE2] transition-colors duration-200">
                             {product.title}
                           </h3>
                           <p className="mt-1 text-sm text-gray-500 capitalize">{product.brand}</p>
@@ -156,7 +156,7 @@ const Cart = () => {
                           </div>
                           <button
                             onClick={() => remove(product)}
-                            className="flex items-center px-3 py-3 border rounded-md bg-gray-100 text-sm text-[#E23378] hover:text-red-600 transition-colors duration-200"
+                            className="flex items-center px-3 py-3 border rounded-md bg-gray-100 text-sm text-[#8A2BE2] hover:text-red-600 transition-colors duration-200"
                           >
                             <Trash2 className="w-4 h-4   " />
                             
@@ -174,7 +174,7 @@ const Cart = () => {
                               <div className="text-black">
                                 ₹{totalDiscountedPrice}
                               </div>
-                              <div className="text-sm text-[#E23378]">
+                              <div className="text-sm text-[#8A2BE2]">
                                 {discountPercent}% off
                               </div>
                             </>
@@ -212,12 +212,12 @@ const Cart = () => {
                   <div className="border-t pt-4">
                     <div className="flex justify-between">
                       <span className="text-base font-semibold text-gray-900">Total</span>
-                      <span className="text-xl font-semibold text-[#E23378]">₹{total}</span>
+                      <span className="text-xl font-semibold text-[#8A2BE2]">₹{total}</span>
                     </div>
                   </div>
                 </div>
 
-                <button className="w-full mt-6 bg-[#E23378] text-white py-3 px-4 rounded-md font-medium hover:bg-[#c92e69] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#E23378] transition-colors duration-200">
+                <button className="w-full mt-6 bg-[#8A2BE2] text-white py-3 px-4 rounded-md font-medium hover:bg-[#c92e69] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8A2BE2] transition-colors duration-200">
                   Proceed to Checkout
                 </button>
 

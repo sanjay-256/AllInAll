@@ -35,7 +35,7 @@ const Comment = ({ id }) => {
 
     return (
         <div>
-            <div className="flex items-center"><BiSolidCommentDetail className='text-blue-300 text-xl'/><h3 className='font-medium texts pl-2 text-xl'>comments</h3></div>
+            <div className="flex items-center"><BiSolidCommentDetail className='text-[#8A2BE2] text-xl'/><h3 className='font-medium texts pl-2 text-xl'>comments</h3></div>
             <div className="p-2 relative">
                 <textarea type="text" name="comment" value={reviews}  onChange={(e)=>{setReviews(e.target.value)}} className='p-2 texts w-full bg-blue-50 border-blue-300 focus:outline-none border border-0 border-b-2' placeholder='comment...' ></textarea>
                 <IoIosSend className='absolute right-5 top-11 cursor-pointer text-2xl' onClick={()=>{sendReview()}}/>

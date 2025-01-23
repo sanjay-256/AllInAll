@@ -31,7 +31,7 @@ const Wishlist = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="container mx-auto py-10">
-        <h1 className="text-2xl font-bold text-center mb-6">Your Wishlist</h1>
+        <h1 className="text-2xl font-bold text-center mb-6 text-[#8A2BE2]">Your Wishlist</h1>
         {loading ? (
           <p className="text-center text-gray-500">Loading wishlist...</p>
         ) : wishlistProducts.length > 0 ? (

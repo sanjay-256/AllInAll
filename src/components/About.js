@@ -9,12 +9,12 @@ const About = () => {
     name: "",
     email: "",
     queries: "",
-    text:""
+    text: ""
   });
 
-  const {BASE_URL} = useContext(AppContext);
+  const { BASE_URL } = useContext(AppContext);
 
-  const [submit,setSubmit]=useState(false);
+  const [submit, setSubmit] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,26 +24,34 @@ const About = () => {
     });
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.name && formData.email && formData.queries && formData.text) {
       setSubmit(true);
-    try {
-      const response=await axios.post(`${BASE_URL}/user/query/${formData.email}/${formData.queries}`);
-      if(response.data !=="error"){
-        setFormData({ name: "", email: "", queries: "", text: "Message sent successfully..." });
-        setSubmit(false);
-          setTimeout(()=>{
+      try {
+        const response = await axios.post(`${BASE_URL}/user/query/${formData.email}/${formData.queries}`);
+        if (response.data !== "error") {
+          setFormData({ name: "", email: "", queries: "", text: "Message sent successfully..." });
+          setSubmit(false);
+          setTimeout(() => {
             setFormData((prev) => ({ ...prev, text: "" }));
-          },4000)
-      }else if(response.data ==="error"){
-        setFormData({ name: "", email: "", queries: "", text: "enter valid email address." });
-        setSubmit(false);
-          setTimeout(()=>{
+          }, 4000)
+        } else if (response.data === "error") {
+          setFormData({ name: "", email: "", queries: "", text: "enter valid email address." });
+          setSubmit(false);
+          setTimeout(() => {
             setFormData((prev) => ({ ...prev, text: "" }));
-          },4000)
+          }, 4000)
+        }
+      } catch (error) {
+        console.error("Error:", error);
       }
-    } catch (error) {
-      console.error("Error:", error);
+    } else {
+      setFormData((prev) => ({ ...prev,text: "Enter all the details." }));
+      setSubmit(false);
+      setTimeout(() => {
+        setFormData((prev) => ({ ...prev, text: "" }));
+      }, 4000)
     }
   };
   return (
@@ -121,11 +129,11 @@ const About = () => {
                 </div>
 
                 <div className="mt-3">
-                  <button type="submit" className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#E23378] border-[#E23378] font-medium cursor-pointer bg-[#E23378] text-white">
-                   {!submit? "Submit":"Submiting..."}
+                  <button type="submit" className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] font-medium cursor-pointer bg-[#8A2BE2] text-white">
+                    {!submit ? "Submit" : "Submiting..."}
                   </button>
                 </div>
-                <p className="text-[#E23378] pt-2 mb-4 text-md">{formData.text}</p>
+                <p className="text-[#8A2BE2] pt-2 mb-4 text-md">{formData.text}</p>
               </form>
             </div>
           </div>

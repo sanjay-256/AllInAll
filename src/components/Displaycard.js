@@ -190,7 +190,7 @@ const Displaycard = () => {
                                 <>₹{product.originalPrice}</>
                             )}
                         </p>
-                        <span className="ml-3 text-[#E23378] font-semibold text-lg texts">
+                        <span className="ml-3 text-[#8A2BE2] font-semibold text-lg texts">
                             {product.discountedPrice > 0 && product.originalPrice && (
                                 <span className=''>( {calculateDiscountPercentage(product.originalPrice, product.discountedPrice)}% OFF )</span>
                             )}
@@ -263,9 +263,9 @@ const Displaycard = () => {
                             )}
                             <button
                                 onClick={() => toggleLike(product.id)}
-                                className={`flex items-center justify-center gap-2 w-48 text-black px-8 py-3 rounded-md transition-all ${product.isLiked
-                                    ? 'bg-[#E23378] hover:bg-pink-500'
-                                    : 'bg-[#64748b] hover:bg-gray-100 border-black'
+                                className={`flex items-center justify-center gap-2 w-48 text-black px-8 py-3 rounded-md transition-all text-white ${product.isLiked
+                                    ? 'bg-[#8A2BE2] hover:bg-[#8A2BE2]-500'
+                                    : 'bg-gray-500 hover:bg-gray-600 border-black'
                                     }`}
                             >
                                 {product.isLiked ? 'In Wishlist' : 'Wishlist'}

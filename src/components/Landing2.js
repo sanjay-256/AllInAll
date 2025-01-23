@@ -254,7 +254,7 @@ const Landing2 = () => {
 
               <div
                 onClick={onSignin}
-                className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#E23378] border-[#E23378] text-white md:bg-transparent md:text-[#E23378] font-medium cursor-pointer hover:bg-[#E23378] hover:text-white"
+                className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"
               >
                 Sign In
               </div>
@@ -304,7 +304,7 @@ const Landing2 = () => {
                   <span onClick={signin}><span className="text-slate-400 pr-1">User</span> SignIn</span>
                 </p>
                 <div className="my-5 w-36 mx-auto ">
-                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#E23378] border-[#E23378] text-white md:bg-transparent md:text-[#E23378] font-medium cursor-pointer hover:bg-[#E23378] hover:text-white"
+                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"
                     onClick={sendotp}
                   >
                     Send OTP
@@ -329,7 +329,7 @@ const Landing2 = () => {
                   <div className="font-medium mt-2 text-slate-400">Didn't receive otp? <span className='text-white hover:cursor-pointer' onClick={sendotp} >Resend otp</span></div>
                 </div>
                 <div className="mt-5 w-36 mx-auto ">
-                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#E23378] border-[#E23378] text-white md:bg-transparent md:text-[#E23378] font-medium cursor-pointer hover:bg-[#E23378] hover:text-white"
+                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"
                     onClick={verifyotp}
                   >
                     Verify OTP
@@ -351,7 +351,7 @@ const Landing2 = () => {
                 </div>
 
                 <div className="w-36 mx-auto mt-4">
-                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#E23378] border-[#E23378] text-white md:bg-transparent md:text-[#E23378] font-medium cursor-pointer hover:bg-[#E23378] hover:text-white"
+                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"
                     onClick={onSignup} >
                     Signup
                   </div>
