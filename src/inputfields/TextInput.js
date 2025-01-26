@@ -19,6 +19,7 @@ const TextInput1 = ({ label, name, value, onChange, helperText, className, type 
         width: '100%', 
         "& .MuiFormHelperText-root": {
           marginLeft: "10px",
+          color:"#8A2BE2"
         },
         "& .MuiFormLabel-root": {
           color: "black",

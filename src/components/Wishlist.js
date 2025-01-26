@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import Csmallcard from "./Csmallcard"; 
 import { AppContext } from '../App';
+import Spinner from "../inputfields/Spinner";
 
 const Wishlist = () => {
   
@@ -33,7 +34,12 @@ const Wishlist = () => {
       <div className="container mx-auto py-10">
         <h1 className="text-2xl font-bold text-center mb-6 text-[#8A2BE2]">Your Wishlist</h1>
         {loading ? (
-          <p className="text-center text-gray-500">Loading wishlist...</p>
+          <>
+          <div className="flex items-center flex-col mt-10">
+            <Spinner/>
+          <p className="text-gray-500">Loading wishlist...</p>
+          </div>
+          </>
         ) : wishlistProducts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {wishlistProducts.map((product) => (

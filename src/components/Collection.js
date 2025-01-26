@@ -84,9 +84,9 @@ if (sortOption === 'low-high') {
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t mx-3 mb-3">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-5 pt-10 border-t px-3 mb-3 bg-gray-100">
       {/* Filter Section */}
-      <div className="min-w-60">
+      <div className="min-w-44">
         <p
           className="my-2 text-xl flex items-center cursor-pointer gap-2"
           onClick={() => setShowFilter(!showFilter)}
@@ -140,11 +140,12 @@ if (sortOption === 'low-high') {
         </select>
 
         {/* Product List */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pb-8 md:pb-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2 pb-8 md:pb-0">
           {filteredAndSortedProducts.map((product) => (
             <Csmallcard
               key={product.id}
               product={product}
+              classname="bg-white shadow-lg rounded-md"
             />
           ))}
         </div>

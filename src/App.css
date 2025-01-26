@@ -29,3 +29,11 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  .bg-color{
+    background-color: rgba(138, 43, 226, 0.2);
+  }
+
+  .bg-color1{
+    background-color: rgba(138, 43, 226, 0.4);
+  }

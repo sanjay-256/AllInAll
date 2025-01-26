@@ -33,7 +33,7 @@ const Home = () => {
         </section>
         <section className='offer images my-10'>
           <div className="brand text-4xl md:text-5xl text-center text-3xl">Exclusive Offers on Top Brands</div>
-          <div className="texts text-center text-lg">Shop Now and Save Big!</div>
+          <div className="texts text-center text-lg mb-2">Shop Now and Save Big!</div>
           <div className="flex justify-center">
             <SmallCard products={offerProducts} classname={"overflow-x-auto flex scrollbar-hide"} />
           </div>
@@ -42,7 +42,7 @@ const Home = () => {
         <section className='latest colllection my-10'>
           <div className="">
             <div className="brand text-4xl md:text-5xl text-center">The Latest Collection</div>
-            <div className="texts text-center text-lg">Be the first to explore our newest arrivals!</div>
+            <div className="texts text-center text-lg mb-2">Be the first to explore our newest arrivals!</div>
           </div>
           <div className="">
             <SmallCard products={latestproducts} classname={"overflow-y-auto flex flex-wrap scrollbar-hide justify-center   h-[400px] md:h-[550px]"} />
@@ -52,7 +52,7 @@ const Home = () => {
         <section className='best sellers my-10'>
           <div className="">
             <div className="brand text-4xl md:text-5xl text-center">Our Best Sellers</div>
-            <div className="texts text-center text-lg">Discover the dresses that our customers can't get enough of!</div>
+            <div className="texts text-center text-lg mb-2">Discover the dresses that our customers can't get enough of!</div>
           </div>
           <div className="">
             <SmallCard products={bestProducts} classname={"overflow-x-auto flex scrollbar-hide "} />

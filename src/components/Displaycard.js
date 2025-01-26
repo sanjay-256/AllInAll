@@ -4,9 +4,11 @@ import { AppContext } from '../App';
 import Star from './Star';
 import axios from 'axios';
 import Comment from './Comment';
+import LikeIcon from '@mui/icons-material/Favorite';
+import { CiHeart } from "react-icons/ci";
 
 const Displaycard = () => {
-    const { allproducts, toggleLike, setCartCount,BASE_URL} = useContext(AppContext);
+    const { allproducts, toggleLike, setCartCount, BASE_URL } = useContext(AppContext);
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [image, setImage] = useState('');
@@ -172,108 +174,117 @@ const Displaycard = () => {
                     <div className="flex-1">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="">
-                            <h1 className="font-bold text-3xl text-gray-800 mt-2">{product.title}</h1>
-                        
-                        <div className="flex items-center gap-1 mt-2">
-                            <Star rating={product.rating || 0} />
-                            <p className="pl-2 text-sm text-gray-500">
-                                ({product.rating ? '122' : 'No reviews'})
-                            </p>
-                        </div>
-                        <p className="font-medium mt-5 text-2xl inline-block">
-                            {product.discountedPrice ? (
-                                <>
-                                    <span className="mr-2 text-slate-400 line-through">₹{product.originalPrice}</span>
-                                    ₹{product.discountedPrice}
-                                </>
-                            ) : (
-                                <>₹{product.originalPrice}</>
-                            )}
-                        </p>
-                        <span className="ml-3 text-[#8A2BE2] font-semibold text-lg texts">
-                            {product.discountedPrice > 0 && product.originalPrice && (
-                                <span className=''>( {calculateDiscountPercentage(product.originalPrice, product.discountedPrice)}% OFF )</span>
-                            )}
-                        </span>
-                        <p className="mt-5 text-gray-600">{product.description}</p>
+                                <h1 className="font-bold text-3xl text-gray-800 mt-2">{product.title}</h1>
 
-                        {/* Select Size */}
-                        {incart ? (
-                            <div className="mt-8">
-                                <p className="font-semibold text-gray-800">Selected Size</p>
-                                <div className="flex gap-4">
-                                    <span className="border py-2 px-4 text-sm font-medium rounded-md border-black bg-gray-200">
-                                        {sizes}
-                                    </span>
+                                <div className="flex items-center gap-1 mt-2">
+                                    <Star rating={product.rating || 0} />
+                                    <p className="pl-2 text-sm text-gray-500">
+                                        ({product.rating ? '122' : 'No reviews'})
+                                    </p>
                                 </div>
-                            </div>
-                        ) : (
-                            product.sizes && JSON.parse(product.sizes).length > 0 && (
-                                <div className="flex flex-col gap-4 mt-8">
-                                    <p className="font-semibold text-gray-800">Select Size</p>
-                                    <div className="flex gap-4">
-                                        {JSON.parse(product.sizes).map((sizeOption, index) => (
-                                            <button
-                                                key={index}
-                                                onClick={() => setSize(sizeOption)}
-                                                className={`border py-2 px-4 text-sm font-medium rounded-md ${size === sizeOption
-                                                    ? 'border-black bg-gray-200'
-                                                    : 'border-gray-300 bg-white'
-                                                    }`}
-                                            >
-                                                {sizeOption}
-                                            </button>
-                                        ))}
+                                <p className="font-medium mt-5 text-2xl inline-block">
+                                    {product.discountedPrice ? (
+                                        <>
+                                            <span className="mr-2 text-slate-400 line-through">₹{product.originalPrice}</span>
+                                            ₹{product.discountedPrice}
+                                        </>
+                                    ) : (
+                                        <>₹{product.originalPrice}</>
+                                    )}
+                                </p>
+                                <span className="ml-3 text-[#8A2BE2] font-semibold text-lg texts">
+                                    {product.discountedPrice > 0 && product.originalPrice && (
+                                        <span className=''>( {calculateDiscountPercentage(product.originalPrice, product.discountedPrice)}% OFF )</span>
+                                    )}
+                                </span>
+                                <p className="mt-5 text-gray-600">{product.description}</p>
+
+                                {/* Select Size */}
+                                {incart ? (
+                                    <div className="mt-8">
+                                        <p className="font-semibold text-gray-800">Selected Size</p>
+                                        <div className="flex gap-4 mt-3">
+                                            <span className="border border-2 py-2 px-4 text-sm font-medium rounded-md border-[#8A2BE2] bg-gray-200">
+                                                {sizes}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    product.sizes && JSON.parse(product.sizes).length > 0 && (
+                                        <div className="flex flex-col gap-4 mt-8">
+                                            <p className="font-semibold text-gray-800">Select Size</p>
+                                            <div className="flex gap-4">
+                                                {JSON.parse(product.sizes).map((sizeOption, index) => (
+                                                    <button
+                                                        key={index}
+                                                        onClick={() => setSize(sizeOption)}
+                                                        className={`border py-2 px-4 text-sm font-medium rounded-md  hover:border-[#8A2BE2] ${size === sizeOption
+                                                            ? 'border-[#8A2BE2]  border-2 text-[#8A2BE2] bg-color'
+                                                            : 'border-gray-300 bg-white'
+                                                            }`}
+                                                    >
+                                                        {sizeOption}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )
+                                )}
+
+                                <div className="">
+                                    {incart ?
+                                        <>
+                                            <div className="text-xl my-3">
+                                                <span className="text-lg">Quantity : </span>{quans}
+                                            </div>
+                                        </> :
+                                        <>
+                                            <p className="font-semibold text-gray-800 mt-3">Select Quantity</p>
+                                            <div className="flex gap-5 items-center font-medium my-3">
+                                                <div className="text-xl border border-2 rounded border-gray-300 cursor-pointer pb-1 px-3 hover:border-[#8A2BE2] hover:text-[#8A2BE2]" onClick={() => { setQuantity(quantity > 1 ? quantity - 1 : quantity) }}>-</div><div className="text-xl">{quantity}</div><div className="text-xl border border-2 rounded border-gray-300 cursor-pointer pb-1 px-2 hover:border-[#8A2BE2] hover:text-[#8A2BE2]" onClick={() => { setQuantity(quantity + 1) }}>+</div>
+                                            </div>
+                                        </>
+                                    }
+                                </div>
+
+                                <div className="flex gap-4 mt-6">
+                                    {/* Add/Remove from Cart Button */}
+                                    {incart ? (
+                                        <button
+                                            onClick={() => remove(product)}
+                                            className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-red-500 hover:bg-red-600"
+                                        >
+                                            Remove from Cart
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => addToCart(product)}
+                                            className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-green-500 hover:bg-green-600"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    )}
+
+                                    {/* Like Button */}
+                                    <div
+                                        className={`group p-2 border px-3 rounded cursor-pointer transition-all flex items-center justify-center ${product.isLiked
+                                                ? 'bg-red-200 border-0 hover:bg-gray-200'
+                                                : 'border-gray-300 text-gray-500 bg-white hover:border-[#8A2BE2] hover:bg-gray-100 '
+                                            }`}
+                                        onClick={() => toggleLike(product.id)}
+                                    >
+                                        {product.isLiked ? (
+                                            <LikeIcon className="text-red-500" style={{ fontSize: '30px' }} />
+                                        ) : (
+                                            <CiHeart className="text-gray-500 font-bold group-hover:text-[#8A2BE2]" style={{ fontSize: '30px' }} />
+                                        )}
                                     </div>
                                 </div>
-                            )
-                        )}
 
-                        <div className="">
-                            {incart ?
-                                <>
-                                    <div className="text-xl my-3">
-                                        <span className="text-lg">Quantity : </span>{quans}
-                                    </div>
-                                </> :
-                                <>
-                                    <p className="font-semibold text-gray-800 mt-3">Select Quantity</p>
-                                    <div className="flex gap-4 items-center font-medium my-3">
-                                        <div className="text-3xl border border-2 rounded border-gray-300 cursor-pointer pb-2 px-3" onClick={() => { setQuantity(quantity > 1 ? quantity - 1 : quantity) }}>-</div><div className="text-xl">{quantity}</div><div className="text-3xl border border-2 rounded border-gray-300 cursor-pointer pb-2 px-2" onClick={() => { setQuantity(quantity + 1) }}>+</div>
-                                    </div>
-                                </>
-                            }
-                        </div>
 
-                        <div className="flex gap-4 mt-6">
-                            {incart ? (
-                                <button
-                                    onClick={() => remove(product)}
-                                    className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-red-500 hover:bg-red-600"
-                                >
-                                    Remove from cart
-                                </button>
-                            ) : (
-                                <button
-                                    onClick={() => addToCart(product)}
-                                    className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-green-500 hover:bg-green-600"
-                                >
-                                    Add to Cart
-                                </button>
-                            )}
-                            <button
-                                onClick={() => toggleLike(product.id)}
-                                className={`flex items-center justify-center gap-2 w-48 text-black px-8 py-3 rounded-md transition-all text-white ${product.isLiked
-                                    ? 'bg-[#8A2BE2] hover:bg-[#8A2BE2]-500'
-                                    : 'bg-gray-500 hover:bg-gray-600 border-black'
-                                    }`}
-                            >
-                                {product.isLiked ? 'In Wishlist' : 'Wishlist'}
-                            </button>
-                        </div>
                             </div>
                             <div className=" p-1 rounded">
-                                <Comment  id={id} />
+                                <Comment id={id} />
                             </div>
                         </div>
 

@@ -31,34 +31,41 @@ const SmallCard = ({ products, classname }) => {
         items.map((item) => (
           <div
             key={item.id}
-            className="flex-shrink-0 w-56 bg-white shadow-lg p-2 border border-slate-300 rounded-md"
+            className="flex-shrink-0 w-52 h-fit bg-white shadow-lg border border-slate-300 rounded-md overflow-hidden relative"
           >
-            <div className="bg-gray-100 rounded-md text-center relative">
-              <LikeIcon
-                className={`absolute right-2 ${item.isLiked ? 'text-red-500' : 'text-slate-300'}`}
-                onClick={() => toggleLike(item.id)}  
-                style={{ fontSize: '30px', cursor: 'pointer' }}
-              />
+            {/* Image with overlay */}
+            <div 
+              className="relative cursor-pointer"
+              onClick={(e) => {
+                // Prevent navigation when clicking on LikeIcon
+                if (!e.target.closest('.like-icon')) {
+                  handleProductSelect(item);
+                }
+              }}
+            >
               <img
-               onClick={() => handleProductSelect(item)}
-                className="h-56 w-full rounded"
+                className="h-56 w-full object-cover rounded-md"
                 src={item.imageUrl}
                 alt={item.title}
               />
-              {item.discountedPrice>0 && item.originalPrice && (
+              {/* Discount Badge */}
+              {item.discountedPrice > 0 && item.originalPrice && (
                 <span className="absolute top-2 left-2 bg-[#8A2BE2] text-white font-medium px-2 rounded flex items-center">
-                  <span className='text-md atext1 pb-1'>{calculateDiscountPercentage(item.originalPrice, item.discountedPrice)}</span> <span className="text-xs texts"> % OFF</span>
+                  <span className="text-md atext1 pb-1">
+                    {calculateDiscountPercentage(item.originalPrice, item.discountedPrice)}
+                  </span>
+                  <span className="text-xs texts"> % OFF</span>
                 </span>
               )}
-            </div>
-            <div className="body capitalize bg-neutral-50 mt-1 px-1 rounded-md">
-              <p className="text-lg">{item.title}</p>
-              <div className="flex justify-between">
-                <p className="font-semibold">{item.brand}</p>
-                <p className="font-medium">
+              {/* Overlay for Product Details */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50"></div>
+              <div className="absolute bottom-0 left-0 right-0 flex flex-col justify-end p-2 rounded-md">
+                <p className="text-white text-lg font-bold truncate">{item.title}</p>
+                <p className="text-white text-sm opacity-90 font-medium truncate">{item.brand}</p>
+                <p className="text-white font-medium">
                   {item.discountedPrice ? (
                     <>
-                      <span className="mr-2 text-slate-400 line-through">₹{item.originalPrice}</span>
+                      <span className="mr-2 text-slate-300 line-through">₹{item.originalPrice}</span>
                       ₹{item.discountedPrice}
                     </>
                   ) : (
@@ -67,6 +74,15 @@ const SmallCard = ({ products, classname }) => {
                 </p>
               </div>
             </div>
+            {/* Like Icon */}
+            <LikeIcon
+              className={`absolute top-2 right-2 bg-white rounded-full p-1 like-icon ${item.isLiked ? 'text-red-500' : 'text-slate-300'}`}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent triggering the parent click
+                toggleLike(item.id);
+              }}
+              style={{ fontSize: '30px', cursor: 'pointer' }}
+            />
           </div>
         ))
       ) : (
@@ -77,3 +93,4 @@ const SmallCard = ({ products, classname }) => {
 };
 
 export default SmallCard;
+

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import { AppContext } from '../App';
+import Spinner from "../inputfields/Spinner";
 
 const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
@@ -87,6 +88,7 @@ const Cart = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <Spinner/>
         <div className="animate-pulse text-gray-500">Loading your cart...</div>
       </div>
     );

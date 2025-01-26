@@ -40,7 +40,7 @@ const Comment = ({ id }) => {
                 <textarea type="text" name="comment" value={reviews}  onChange={(e)=>{setReviews(e.target.value)}} className='p-2 texts w-full bg-blue-50 border-blue-300 focus:outline-none border border-0 border-b-2' placeholder='comment...' ></textarea>
                 <IoIosSend className='absolute right-5 top-11 cursor-pointer text-2xl' onClick={()=>{sendReview()}}/>
             </div>
-            <div className={`p-1 m-2 rounded overflow-y-auto h-[340px] scrollbar-hide ${comment.length>0?"bg-white":"h-fit"}`}>
+            <div className={`p-1 m-2 rounded overflow-y-auto h-[340px] ${comment.length>0?"bg-white":"h-fit"}`}>
                 {comment.length>0?
                 (comment.map((item,index)=>(
                     <div className="p-2 border-b-2 hover:bg-gray-400 rounded hover:text-white" key={index}>
