@@ -9,6 +9,7 @@ import About from "./components/About";
 import Wishlist from "./components/Wishlist";
 import axios from "axios";
 import Cart from "./components/Cart";
+import Toaster from "./components/Toaster";
 
 export const AppContext = createContext();
 
@@ -131,6 +132,18 @@ function MainContent({ isRegistered, setIsRegistered }) {
 
   return (
     <>
+     <Toaster
+      position="top-right"
+      toastOptions={{
+        duration: 5000, // 5 seconds
+        style: {
+          border: '1px solid #E1E1E1',
+          padding: '16px',
+          color: '#333',
+        },
+      }}
+      reverseOrder={false}
+    />
       {(location.pathname === "/home" || location.pathname === "/collection" || location.pathname === "/about" || location.pathname === "/cart" || location.pathname === "/wishlist" || location.pathname.startsWith("/displaycard")) && <Header />}
       <div>
         <Routes>

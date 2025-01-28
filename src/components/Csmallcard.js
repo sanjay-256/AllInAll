@@ -9,7 +9,6 @@ const Csmallcard = ({ product, classname, onClick }) => {
   const [item, setItem] = useState(product);  
   const navigate = useNavigate(); 
 
-  // Update the local `item` state whenever the global `allproducts` changes
   useEffect(() => {
     const updatedProduct = allproducts.find((p) => p.id === product.id);
     if (updatedProduct) {

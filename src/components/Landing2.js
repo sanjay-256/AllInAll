@@ -5,6 +5,7 @@ import axios from 'axios'
 import "../App.css"
 import { useNavigate } from 'react-router-dom'
 import { AppContext } from '../App';
+import { toast } from 'react-toastify'
 
 const Landing2 = () => {
   
@@ -64,13 +65,32 @@ const Landing2 = () => {
       const response = await axios.post(`${BASE_URL}/user/register`, userData);
       console.log(response);
       if (response.data === "Registered successfully") {
-        alert("OTP sent to your mail-id: " + user.useremail);
+        toast.success("OTP sent to your mail-id: " + user.useremail);
         setChange((prevstate) => ({ ...prevstate, otpverify: !change.otpverify, register: !change.register }));
-      } else if (response.data === "Account already exists") {
-        alert("Account already exists.");
+      }else if (response.data === "user not verified") {
+        toast.warn("Account already exists, redirecting to verification");
+        toast.success("OTP sent to your mail-id: " + user.useremail);
+        setChange((prevstate) => ({ ...prevstate, otpverify: !change.otpverify, register: !change.register }));
+      }
+       else if (response.data === "Account already exists") {
+        toast.error("Account already exists.");
       }
       else {
-        alert(response.data.message || "Registration failed. Please try again.");
+        toast.info(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
+  const resendOtp=async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await axios.get(`${BASE_URL}/user/resendotp/${user.useremail}`);
+      if(response.data==="otp sent"){
+        toast.success("Your otp is sent to your mail "+user.useremail)
+      }else{
+        toast.error("check the connection");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -79,7 +99,7 @@ const Landing2 = () => {
 
   const verifyotp = async (e) => {
     if (user.userotp === "") {
-      alert("Please enter the OTP.");
+      toast.info("Please enter the OTP.");
       return;
     }
     e.preventDefault();
@@ -91,10 +111,10 @@ const Landing2 = () => {
       const response = await axios.post(`${BASE_URL}/user/verify-otp/${userData.useremail}/${userData.userotp}`);
       console.log(response);
       if (response.data === "User verified") {
-        alert("User " + user.username + " verified");
+        toast.success("User " + user.username + " verified");
         setChange((prevstate) => ({ ...prevstate, setpassword: !change.setpassword, otpverify: false }));
       } else {
-        alert(response.data.message || "Invalid OTP. Please try again.");
+        toast.error(response.data.message || "Invalid OTP. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -130,7 +150,7 @@ const Landing2 = () => {
       const response = await axios.post(`${BASE_URL}/user/setpassword/${userData.useremail}/${userData.userpassword}`);
       console.log(response);
       if (response.data === "Password has been set successfully.") {
-        alert("Signup successful!");
+        toast.success("Signup successful!");
         localStorage.setItem('allinall', 'true');
         localStorage.setItem('useremail',user.useremail);
         navigate("/home");
@@ -142,7 +162,7 @@ const Landing2 = () => {
           setpassword: false
         }));
       } else {
-        alert(response.data.message || "Signup failed. Please try again.");
+        toast.error(response.data.message || "Signup failed. Please try again.");
       }
       setUser({
         username: "",
@@ -160,7 +180,7 @@ const Landing2 = () => {
     e.preventDefault();
     try {
       if (userin.useremail === "" || userin.userpassword === "") {
-        alert("enter your registered email or password!");
+        toast.warn("enter your registered email or password!");
         return;
       }
       const response = await axios.get(`${BASE_URL}/user/login/${userin.useremail}/${userin.userpassword}`);
@@ -169,18 +189,18 @@ const Landing2 = () => {
       if (message.startsWith("Welcome")) {
         localStorage.setItem('allinall', 'true');
         localStorage.setItem('useremail',userin.useremail);
-        alert(message);
+        toast.success(message);
         navigate("/home")
         setUserin({
           useremail: "",
           userpassword: ""
         });
       } else if (message === "Invalid password") {
-        alert("The password entered is incorrect. Please try again.");
+        toast.warn("The password entered is incorrect. Please try again.");
       } else if (message === "email not found?..") {
-        alert("The email entered is not registered. Please sign up.");
+        toast.error("The email entered is not registered. Please sign up.");
       } else {
-        alert("An unexpected error occurred. Please try again.");
+        toast.error("An unexpected error occurred. Please try again.");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -191,12 +211,12 @@ const Landing2 = () => {
     e.preventDefault();
     try {
       if (userin.useremail) {
-        alert("mail sent");
+        toast.info("mail sent");
         const response = await axios.get(`${BASE_URL}/user/forgotpass/${userin.useremail}`);
         console.log(response.data);
 
       } else {
-        alert("enter your registered email");
+        toast.warn("enter your registered email");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -234,7 +254,7 @@ const Landing2 = () => {
                   label="Email"
                   value={userin.useremail}
                   onChange={handleChange1}
-                  helperText={"enter email"}
+                  helperText={error.username||"enter email"}
                 />
               </div>
 
@@ -326,7 +346,7 @@ const Landing2 = () => {
                     onChange={handleChange}
                     helperText="enter the otp sent to your mail-id"
                   />
-                  <div className="font-medium mt-2 text-slate-400">Didn't receive otp? <span className='text-white hover:cursor-pointer' onClick={sendotp} >Resend otp</span></div>
+                  <div className="font-medium mt-2 text-slate-400">Didn't receive otp? <span className='text-white hover:cursor-pointer' onClick={resendOtp} >Resend otp</span></div>
                 </div>
                 <div className="mt-5 w-36 mx-auto ">
                   <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"

@@ -14,6 +14,7 @@ import { AiOutlineUserDelete } from "react-icons/ai";
 import { FaExclamation } from "react-icons/fa6";
 import axios from 'axios';
 import { AppContext } from '../App';
+import { toast } from 'react-toastify';
 
 const Header = () => {
   
@@ -80,7 +81,7 @@ const Header = () => {
       const response = await axios.delete(`${BASE_URL}/user/deleteuser/${email}`);
       console.log(response);
       if (response.data === "User deleted") {
-        alert("Account deleted successfully");
+        toast.success("Account deleted successfully");
         
         localStorage.removeItem("allinall");
         localStorage.removeItem("useremail");
@@ -89,7 +90,7 @@ const Header = () => {
       }
     } catch (error) {
       console.error("Error deleting user:", error);
-      alert("Failed to delete account. Please try again.");
+      toast.error('Failed to delete account. Please try again.');
     }
   };
 

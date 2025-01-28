@@ -6,6 +6,7 @@ import axios from 'axios';
 import Comment from './Comment';
 import LikeIcon from '@mui/icons-material/Favorite';
 import { CiHeart } from "react-icons/ci";
+import { toast } from 'react-toastify';
 
 const Displaycard = () => {
     const { allproducts, toggleLike, setCartCount, BASE_URL } = useContext(AppContext);
@@ -91,7 +92,7 @@ const Displaycard = () => {
 
     const addToCart = async (product) => {
         if (!size) {
-            alert('Please select a size.');
+            toast.error('Please select a size.');
             return;
         }
         try {
