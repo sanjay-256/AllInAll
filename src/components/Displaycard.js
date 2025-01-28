@@ -153,7 +153,7 @@ const Displaycard = () => {
                 <div className="flex flex-col sm:flex-row gap-7">
                     {/* Product Images */}
                     <div className="flex-1 flex flex-col-reverse sm:flex-row gap-4">
-                        <div className="flex h-[80%] sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-evenly sm:w-[25%] w-full md:pr-3">
+                        <div className="flex h-[80%] sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-evenly sm:w-[30%] w-full md:pr-3">
                             <img
                                 src={product.imageUrl}
                                 alt={product.title}
@@ -161,11 +161,11 @@ const Displaycard = () => {
                                 onClick={() => setImage(product.imageUrl)}
                             />
                         </div>
-                        <div className="w-full sm:w-[500px]">
+                        <div className="w-full sm:w-[450px]">
                             <img
                                 src={image}
                                 alt={product.title}
-                                className="w-full h-[500px] rounded-xl shadow-lg"
+                                className="w-full h-[550px] rounded-xl shadow-lg"
                             />
                         </div>
                     </div>
@@ -252,14 +252,14 @@ const Displaycard = () => {
                                     {incart ? (
                                         <button
                                             onClick={() => remove(product)}
-                                            className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-red-500 hover:bg-red-600"
+                                            className="flex items-center justify-center gap-2 text-white px-8 py-3 rounded-md transition-all bg-red-500 hover:bg-red-600"
                                         >
                                             Remove from Cart
                                         </button>
                                     ) : (
                                         <button
                                             onClick={() => addToCart(product)}
-                                            className="flex items-center justify-center gap-2 w-48 text-white px-8 py-3 rounded-md transition-all bg-green-500 hover:bg-green-600"
+                                            className="flex items-center justify-center gap-2 text-white px-8 py-3 rounded-md transition-all bg-green-500 hover:bg-green-600"
                                         >
                                             Add to Cart
                                         </button>

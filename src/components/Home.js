@@ -54,7 +54,7 @@ const Home = () => {
             <div className="brand text-4xl md:text-5xl text-center">Our Best Sellers</div>
             <div className="texts text-center text-lg mb-2">Discover the dresses that our customers can't get enough of!</div>
           </div>
-          <div className="">
+          <div className="flex justify-center">
             <SmallCard products={bestProducts} classname={"overflow-x-auto flex scrollbar-hide "} />
           </div>
         </section>

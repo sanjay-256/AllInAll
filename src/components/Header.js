@@ -10,6 +10,8 @@ import { FaCircleInfo } from "react-icons/fa6";
 import { MdPerson } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
 import { RiSmartphoneFill } from "react-icons/ri";
+import { AiOutlineUserDelete } from "react-icons/ai";
+import { FaExclamation } from "react-icons/fa6";
 import axios from 'axios';
 import { AppContext } from '../App';
 
@@ -46,6 +48,7 @@ const Header = () => {
   const navItem = [
     { name: 'Home', path: '/home', icon: <RiHome9Fill /> },
     { name: 'Collections', path: '/collection', icon: <BsCollectionFill /> },
+    { name: 'About', path: '/about', icon: <FaExclamation /> },
     { name: 'Wishlist', path: '/wishlist', icon: <BsBagHeartFill /> },
     { name: 'Cart', path: '/cart', icon: <HiShoppingCart /> },
   ];
@@ -70,6 +73,25 @@ const Header = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const removeAccount = async () => {
+    try {
+      const email = localStorage.getItem("useremail");
+      const response = await axios.delete(`${BASE_URL}/user/deleteuser/${email}`);
+      console.log(response);
+      if (response.data === "User deleted") {
+        alert("Account deleted successfully");
+        
+        localStorage.removeItem("allinall");
+        localStorage.removeItem("useremail");
+  
+        navigate("/landing");
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      alert("Failed to delete account. Please try again.");
+    }
+  };
 
   return (
    <>
@@ -123,6 +145,9 @@ const Header = () => {
                 <p className="cursor-pointer flex gap-2 items-center hover:text-red-400" onClick={handleLogout}>
                   <IoIosLogOut /> Logout
                 </p>
+                <p className="cursor-pointer flex gap-2 items-center hover:text-[#8A2BE2]" onClick={removeAccount}>
+                  <AiOutlineUserDelete /> Delete Account
+                </p>
               </div>
             </div>
           )}
@@ -146,7 +171,7 @@ const Header = () => {
         <NavLink
           key={index}
           to={item.path}
-          className={({ isActive }) => `flex flex-col items-center text-md transition-all duration-300 ${isActive ? 'text-black' : 'text-gray-700'}`}>
+          className={({ isActive }) => `flex flex-col items-center text-md transition-all duration-300 ${isActive ? 'text-[#8A2BE2]' : 'text-gray-700'}`}>
           {item.icon}
           <p>{item.name}</p>
         </NavLink>

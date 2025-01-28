@@ -28,6 +28,11 @@ const TextInput1 = ({ label, name, value, onChange, helperText, className, type 
           paddingRight: "10px",
           paddingLeft: "10px", 
         },
+        "& input:-webkit-autofill": {
+          WebkitBoxShadow: "0 0 0px 1000px white inset", 
+          WebkitTextFillColor: "black", 
+          transition: "background-color 5000s ease-in-out 0s",
+        },
       }}
     />
   );
@@ -79,6 +84,13 @@ const TextInput = ({ label, name, value, onChange, helperText, className, type }
           color: "white", // Input text color
         },
 
+        // Autofill styling
+        "& input:-webkit-autofill": {
+          WebkitBoxShadow: "0 0 0px 1000px transparent inset",
+          WebkitTextFillColor: "white",
+          transition: "background-color 5000s ease-in-out 0s",
+        },
+
         // Ensures padding consistency
         "& .MuiOutlinedInput-input": {
           paddingRight: "10px",
@@ -88,6 +100,8 @@ const TextInput = ({ label, name, value, onChange, helperText, className, type }
     />
   );
 };
+
+
 
 
 export { TextInput1, TextInput };
