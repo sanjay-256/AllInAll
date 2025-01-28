@@ -1,16 +1,19 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Trash2 } from "lucide-react";
 import { AppContext } from '../App';
 import Spinner from "../inputfields/Spinner";
+import { toast } from "react-toastify";
+import { duration } from "@mui/material";
 
 const Cart = () => {
   const [cartProducts, setCartProducts] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [loading, setLoading] = useState(true);
+  const [proceding, setProceding] = useState(false);
   const navigate = useNavigate();
-  const {BASE_URL} = useContext(AppContext);
+  const { BASE_URL } = useContext(AppContext);
 
   const calculateOfferPercent = (original, discounted) => {
     return Math.round(((original - discounted) / original) * 100);
@@ -55,14 +58,14 @@ const Cart = () => {
           console.error("User email not found in localStorage.");
           return;
         }
-  
+
         const userResponse = await axios.get(`${BASE_URL}/user/getuserid/${email}`);
         const userId = userResponse.data;
-  
+
         const response = await axios.get(`${BASE_URL}/cart/getproducts/${userId}`);
         setCartProducts(response.data || []);
         setLoading(false);
-  
+
         response.data.forEach((product) => {
           fetchProductQuantity(userId, product.id);
         });
@@ -70,9 +73,84 @@ const Cart = () => {
         console.error("Error fetching cart:", error);
         setLoading(false);
       }
-    };  
+    };
     fetchCart();
   }, []);
+
+
+  const proced = async (e) => {
+    e.preventDefault();
+    try {
+      setProceding(true);
+      const userEmail = localStorage.getItem("useremail");
+
+      if (!userEmail) {
+        console.error("User email is missing");
+        return;
+      }
+
+      // Prepare the product details in an HTML table format
+      let tableContent = `
+          <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; width: 100%;">
+            <thead>
+              <tr>
+                <th style="text-align: left;">Product Name</th>
+                <th style="text-align: left;">Brand</th>
+                <th style="text-align: left;">Size</th>
+                <th style="text-align: left;">Quantity</th>
+                <th style="text-align: left;">Price</th>
+                <th style="text-align: left;">Tax Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+      cartProducts.forEach((product) => {
+        const quantity = quantities[product.id] || 1;
+        const price = product.discountedPrice || product.originalPrice;
+        const taxAmount = price * 0.1; // Assuming a 10% tax
+
+        tableContent += `
+            <tr>
+              <td>${product.title}</td>
+              <td>${product.brand}</td>
+              <td>${product.size || "N/A"}</td>
+              <td>${quantity}</td>
+              <td>₹${price}</td>
+              <td>₹${taxAmount}</td>
+            </tr>
+          `;
+      });
+
+      tableContent += `
+            </tbody>
+          </table>
+        `;
+
+      const subject = "Your Purchase Receipt";
+      const body = `
+          <h3>Thank you for your purchase!</h3>
+          <p>Please find your order details below:</p>
+          ${tableContent}
+          <p>Total Amount: ₹${total}</p>
+          <p>Tax (10%): ₹${tax}</p>
+          <p>Shipping: ₹${shipping}</p>
+          <p><strong>Total Payable: ₹${total}</strong></p>
+        `;
+      const payload = {
+        subject,
+        body
+      }
+      const response = await axios.post(`${BASE_URL}/cart/checkout/${userEmail}`, payload);
+      if (response.data === "order sent") {
+        toast.success('Order sent');
+        toast.info('Check your mail for recipt', { duration: 5000 });
+        setProceding(false);
+      }
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  }
 
 
 
@@ -87,8 +165,8 @@ const Cart = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <Spinner/>
+      <div className="min-h-screen flex flex-col gap-4 items-center justify-center bg-gray-50">
+        <Spinner />
         <div className="animate-pulse text-gray-500">Loading your cart...</div>
       </div>
     );
@@ -142,7 +220,7 @@ const Cart = () => {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <div 
+                        <div
                           className="cursor-pointer"
                           onClick={() => handleProductSelect(product)}
                         >
@@ -161,7 +239,7 @@ const Cart = () => {
                             className="flex items-center px-3 py-3 border rounded-md bg-gray-100 text-sm text-[#8A2BE2] hover:text-red-600 transition-colors duration-200"
                           >
                             <Trash2 className="w-4 h-4   " />
-                            
+
                           </button>
                         </div>
                       </div>
@@ -219,8 +297,16 @@ const Cart = () => {
                   </div>
                 </div>
 
-                <button className="w-full mt-6 bg-[#8A2BE2] text-white py-3 px-4 rounded-md font-medium hover:bg-[#c92e69] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8A2BE2] transition-colors duration-200">
-                  Proceed to Checkout
+                <button
+                  onClick={proced}
+                  disabled={proceding}
+                  className={`w-full mt-6 bg-[#8A2BE2] text-white py-3 px-4 rounded-md font-medium hover:bg-[#c92e69] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8A2BE2] transition-colors duration-200 ${proceding ? "cursor-not-allowed opacity-50" : ""}`}
+                >
+                  {proceding ? (
+                      "Proceeding..."
+                  ) : (
+                    "Proceed to Checkout"
+                  )}
                 </button>
 
                 <p className="mt-4 text-xs text-center text-gray-500">

@@ -11,6 +11,7 @@ const Landing2 = () => {
   
   const {BASE_URL} = useContext(AppContext);
   const navigate=useNavigate();
+    const [proceding, setProceding] = useState(false);
   const [user, setUser] = useState({
     username: "",
     usernumber: "",
@@ -57,6 +58,11 @@ const Landing2 = () => {
   const sendotp = async (e) => {
     e.preventDefault();
     try {
+      if (!user.username || !user.useremail || !user.usernumber) {
+        toast.error("Please fill in all details.");
+        return; 
+      }
+      setProceding(true);
       const userData = {
         username: user.username,
         useremail: user.useremail,
@@ -67,10 +73,13 @@ const Landing2 = () => {
       if (response.data === "Registered successfully") {
         toast.success("OTP sent to your mail-id: " + user.useremail);
         setChange((prevstate) => ({ ...prevstate, otpverify: !change.otpverify, register: !change.register }));
+        setProceding(false);
       }else if (response.data === "user not verified") {
-        toast.warn("Account already exists, redirecting to verification");
-        toast.success("OTP sent to your mail-id: " + user.useremail);
-        setChange((prevstate) => ({ ...prevstate, otpverify: !change.otpverify, register: !change.register }));
+        toast.warn("Account already exists, redirecting to verification", { duration: 3000 });
+        setTimeout(()=>{
+          toast.success("OTP sent to your mail-id: " + user.useremail, { duration: 5000 });
+          setChange((prevstate) => ({ ...prevstate, otpverify: !change.otpverify, register: !change.register }));
+        },4000);
       }
        else if (response.data === "Account already exists") {
         toast.error("Account already exists.");
@@ -80,6 +89,7 @@ const Landing2 = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+      setProceding(false);
     }
   }
 
@@ -323,12 +333,13 @@ const Landing2 = () => {
                 <p className="my-3 font-semibold text-white text-right text-sm cursor-pointer">
                   <span onClick={signin}><span className="text-slate-400 pr-1">User</span> SignIn</span>
                 </p>
-                <div className="my-5 w-36 mx-auto ">
-                  <div className="w-24 rounded-md mt-4 py-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white"
+                <div className="my-5 flex justify-center ">
+                  <button className={`${proceding?"bg-[#8A2BE2] border-[#8A2BE2] text-white":""} w-fit rounded-md mt-4 p-2 mx-auto text-center border-2 bg-[#8A2BE2] border-[#8A2BE2] text-white md:bg-transparent md:text-[#8A2BE2] font-medium cursor-pointer hover:bg-[#8A2BE2] hover:text-white`}
                     onClick={sendotp}
+                    disabled={proceding}
                   >
-                    Send OTP
-                  </div>
+                   {proceding? "Sending OTP..." :"Send OTP"}
+                  </button>
                 </div>
               </div>}
 
